@@ -4,8 +4,10 @@ import cryptoanalaiizer.model.Cipher;
 import cryptoanalaiizer.model.DefaultRussianAlphabet;
 import cryptoanalaiizer.ui.MainView;
 import cryptoanalaiizer.utils.FileManager;
+import cryptoanalaiizer.utils.Validator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -20,6 +22,28 @@ public class MainController {
         setupListeners();
     }
 
+    private void showAlertWindow(String head, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка");
+        alert.setHeaderText(head);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    ;
+
+    private boolean isStartButtonAvailability() {
+        if (view.getFilePathFieldOut().getText() != null
+                && view.getFilePathFieldIn().getText() != null
+                && !view.getFilePathFieldIn().getText().isEmpty()
+                && !view.getFilePathFieldOut().getText().isEmpty()
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private void setupListeners() {
         log("Программа запущена");
         view.getSelectFileButtonIn().setOnAction(new EventHandler<ActionEvent>() {
@@ -28,29 +52,41 @@ public class MainController {
                 FileChooser fileChooser = new FileChooser();
                 File file = fileChooser.showOpenDialog(new Stage());
                 if (file != null) {
-                    view.getFilePathFieldIn().setText(file.getAbsolutePath());
-                    log("Выбран файл с входными данными: " + file);
+                    boolean isValidExtension = Validator.isValidExtension(file.getAbsolutePath());
+                    if (!isValidExtension) {
+                        view.getFilePathFieldIn().setText("");
+                        showAlertWindow("Неподдерживаемый файл", "Пожалуйста, выберите файл с расширением .txt");
+                    } else {
+                        view.getFilePathFieldIn().setText(file.getAbsolutePath());
+                        log("Выбран файл с входными данными: " + file);
+                    }
+
                 }
-                if (view.getFilePathFieldOut().getText() != null && view.getFilePathFieldIn().getText() != null) {
+                if (isStartButtonAvailability()) {
                     view.getStartButton().setDisable(false);
                 }
             }
+
+
         });
         view.getSelectFileButtonOut().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 FileChooser fileChooser = new FileChooser();
                 File file = fileChooser.showOpenDialog(new Stage());
+
                 if (file != null) {
-                    view.getFilePathFieldOut().setText(file.getAbsolutePath());
-                    log("Выбран файл с выходными данными: " + file);
+                    boolean isValidExtension = Validator.isValidExtension(file.getAbsolutePath());
+                    if (!isValidExtension) {
+                        view.getFilePathFieldOut().setText("");
+                        showAlertWindow("Неподдерживаемый файл", "Пожалуйста, выберите файл с расширением .txt");
+                    } else {
+                        view.getFilePathFieldOut().setText(file.getAbsolutePath());
+                        log("Выбран файл с выходными данными: " + file);
+                    }
                 }
                 ;
-                if (view.getFilePathFieldOut().getText() != null
-                        && view.getFilePathFieldIn().getText() != null
-                        && !view.getFilePathFieldOut().getText().trim().isEmpty()
-                        && !view.getFilePathFieldIn().getText().trim().isEmpty()
-                ) {
+                if (isStartButtonAvailability()) {
                     view.getStartButton().setDisable(false);
                 }
             }
@@ -91,6 +127,7 @@ public class MainController {
                         log("Начат процесс зашифровки данных полученных из файла.");
                         resultText = cipher.encrypt(inText, key);
                         log("Завершен процесс зашифровки данных полученных из файла.");
+                        throw new RuntimeException("djd djdjdjd");
                     } else {
                         log("Начат процесс расшифровки данных полученных из файла.");
                         resultText = cipher.decrypt(inText, key);
@@ -102,6 +139,7 @@ public class MainController {
                     log("Запись данных завершена");
                 } catch (RuntimeException err) {
                     err.printStackTrace();
+                    showAlertWindow("Призошла ошибка", "Нажмите ОК и посмотрите подробности в логе");
                     logError("В работе программы произошла ошибка!");
                     logError(err.getMessage());
                     logError(Arrays.toString(err.getStackTrace()));

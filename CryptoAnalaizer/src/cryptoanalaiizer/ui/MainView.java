@@ -1,7 +1,6 @@
 package cryptoanalaiizer.ui;
 
 import cryptoanalaiizer.model.DefaultRussianAlphabet;
-import cryptoanalaiizer.model.ExtendedRussianAlphabet;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,6 +21,7 @@ public class MainView {
 
 
     public Scene createScene() {
+        //TODO вынести в константы названия кнопок
         VBox selectionPanelAll = getPathFilePanel();
         VBox controlPanelAll = getControlPanelAll();
         ScrollPane logPane = getLogPane();
@@ -40,7 +40,7 @@ public class MainView {
         HBox.setMargin(keyTip, new Insets(0, 0, 0, 20));
         int minKeyLenght = 1;
         int maxKeyLength = DefaultRussianAlphabet.values().length;
-        key = new Spinner<Integer>(minKeyLenght, maxKeyLength, 1);
+        key = new Spinner<>(minKeyLenght, maxKeyLength, 1);
         HBox keyInfo = new HBox(10, keyTip, key);
 
         encryptCheckBox = new CheckBox("Шифровать");
@@ -89,8 +89,6 @@ public class MainView {
         ScrollPane logScrollPane = new ScrollPane(logArea);
         logScrollPane.setFitToWidth(true);
         logScrollPane.setFitToHeight(true);
-        logScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        logScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         return logScrollPane;
     }
 
