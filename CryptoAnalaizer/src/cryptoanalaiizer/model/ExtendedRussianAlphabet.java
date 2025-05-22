@@ -1,49 +1,53 @@
 package cryptoanalaiizer.model;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 public enum ExtendedRussianAlphabet {
-    A('А', 1),
-    BE('Б', 2),
-    VE('В', 3),
-    GE('Г', 4),
-    DE('Д', 5),
-    YE('Е', 6),
-    YO('Ё', 7),
-    ZHE('Ж', 8),
-    ZE('З', 9),
-    I('И', 10),
-    SHORT_I('Й', 11),
-    KA('К', 12),
-    EL('Л', 13),
-    EM('М', 14),
-    EN('Н', 15),
-    O('О', 16),
-    PE('П', 17),
-    ER('Р', 18),
-    ES('С', 19),
-    TE('Т', 20),
-    U('У', 21),
-    EF('Ф', 22),
-    HA('Х', 23),
-    TSE('Ц', 24),
-    CHE('Ч', 25),
-    SHA('Ш', 26),
-    SHCHA('Щ', 27),
-    HARD_SIGN('Ъ', 28),
-    YERU('Ы', 29),
-    SOFT_SIGN('Ь', 30),
-    EH('Э', 31),
-    YU('Ю', 32),
-    YA('Я', 33),
-    DOT('.',34),
-    COMMA(',',35),
-    LEFT_GUILLEMET('«',36),
-    RIGHT_GUILLEMET('»',37),
-    DOUBLE_QUOTE('"',38),
-    SINGLE_QUOTE('\'',39),
-    COLON(':',40),
-    EXCLAMATION('!',41),
-    QUESTION('?',42),
-    SPACE(' ',43);
+    A('А', 0),
+    BE('Б', 1),
+    VE('В', 2),
+    GE('Г', 3),
+    DE('Д', 4),
+    YE('Е', 5),
+    YO('Ё', 6),
+    ZHE('Ж', 7),
+    ZE('З', 8),
+    I('И', 9),
+    SHORT_I('Й', 10),
+    KA('К', 11),
+    EL('Л', 12),
+    EM('М', 13),
+    EN('Н', 14),
+    O('О', 15),
+    PE('П', 16),
+    ER('Р', 17),
+    ES('С', 18),
+    TE('Т', 19),
+    U('У', 20),
+    EF('Ф', 21),
+    HA('Х', 22),
+    TSE('Ц', 23),
+    CHE('Ч', 24),
+    SHA('Ш', 25),
+    SHCHA('Щ', 26),
+    HARD_SIGN('Ъ', 27),
+    YERU('Ы', 28),
+    SOFT_SIGN('Ь', 29),
+    EH('Э', 30),
+    YU('Ю', 31),
+    YA('Я', 32),
+    DOT('.', 33),
+    COMMA(',', 34),
+    LEFT_GUILLEMET('«', 35),
+    RIGHT_GUILLEMET('»', 36),
+    DOUBLE_QUOTE('"', 37),
+    SINGLE_QUOTE('\'', 38),
+    COLON(':', 39),
+    EXCLAMATION('!', 40),
+    QUESTION('?', 41),
+    SPACE(' ', 42);
+
     private final char cyrillicChar;
     private final int position;
 
@@ -68,5 +72,23 @@ public enum ExtendedRussianAlphabet {
             num++;
         }
         return cyrillicArray;
+    }
+
+    ;
+
+    public static HashSet<Character> getAlphabetSet() {
+        HashSet<Character> alphabetSet = new HashSet<>();
+        for (var letter : DefaultRussianAlphabet.values()) {
+            alphabetSet.add(letter.getCyrillicChar());
+        }
+        return alphabetSet;
+    }
+
+    public static HashMap<Character, Integer> getAlphabetMap() {
+        HashMap<Character, Integer> alphabetMap = new HashMap<>();
+        for (var letter : DefaultRussianAlphabet.values()) {
+            alphabetMap.put(letter.getCyrillicChar(), letter.getPosition());
+        }
+        return alphabetMap;
     }
 }

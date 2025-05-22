@@ -7,9 +7,14 @@ import java.util.Arrays;
 
 public class TestCipher {
     public static void main(String[] args) {
-         System.out.print("Базовый алфавит = ");
+        System.out.print("Базовый алфавит = ");
         System.out.println(Arrays.toString(DefaultRussianAlphabet.cyrillicValues()));
-        Cipher cipher = new Cipher(DefaultRussianAlphabet.cyrillicValues());
+        System.out.print("Базовый алфавит  в HashSet= ");
+        System.out.println(DefaultRussianAlphabet.getAlphabetSet());
+        System.out.print("Базовый алфавит  в HashMap= ");
+        System.out.println(DefaultRussianAlphabet.getAlphabetMap());
+
+        Cipher cipher = new Cipher();
         System.out.println(cipher.getAlphabet());
         System.out.println("------------------------------");
         System.out.println("--Шифровка--");

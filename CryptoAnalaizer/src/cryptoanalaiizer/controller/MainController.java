@@ -121,7 +121,7 @@ public class MainController {
                     log("Начато чтение данных из \"" + view.getFilePathFieldIn().getText() + "\"");
                     String inText = FileManager.readFile(view.getFilePathFieldIn().getText());
                     log("Чтение данных завершено.");
-                    Cipher cipher = new Cipher(DefaultRussianAlphabet.cyrillicValues());
+                    Cipher cipher = new Cipher();
                     String resultText = "";
                     if (view.getEncryptCheckBox().isSelected()) {
                         log("Начат процесс зашифровки данных полученных из файла.");
