@@ -127,7 +127,6 @@ public class MainController {
                         log("Начат процесс зашифровки данных полученных из файла.");
                         resultText = cipher.encrypt(inText, key);
                         log("Завершен процесс зашифровки данных полученных из файла.");
-                        throw new RuntimeException("djd djdjdjd");
                     } else {
                         log("Начат процесс расшифровки данных полученных из файла.");
                         resultText = cipher.decrypt(inText, key);

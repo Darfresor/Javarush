@@ -34,12 +34,11 @@ public class MainView {
     }
 
 
-
     private VBox getControlPanelAll() {
         Label keyTip = new Label("Укажите длину ключа:");
         HBox.setMargin(keyTip, new Insets(0, 0, 0, 20));
         int minKeyLenght = 1;
-        int maxKeyLength = DefaultRussianAlphabet.values().length;
+        int maxKeyLength = DefaultRussianAlphabet.values().length - 1;
         key = new Spinner<>(minKeyLenght, maxKeyLength, 1);
         HBox keyInfo = new HBox(10, keyTip, key);
 
@@ -95,6 +94,7 @@ public class MainView {
     public CheckBox getEncryptCheckBox() {
         return encryptCheckBox;
     }
+
     public CheckBox getDeryptCheckBox() {
         return deryptCheckBox;
     }
@@ -102,6 +102,7 @@ public class MainView {
     public Button getStartButton() {
         return startButton;
     }
+
     public TextArea getlogArea() {
         return logArea;
     }
@@ -121,6 +122,7 @@ public class MainView {
     public TextField getFilePathFieldOut() {
         return filePathFieldOut;
     }
+
     public Spinner<Integer> getSpinner() {
         return key;
     }
